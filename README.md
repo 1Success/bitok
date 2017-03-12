@@ -1,7 +1,3 @@
-![BitokOnline Logo](https://i.imgur.com/ovemJA3.png)
-
-[![Slack](https://slack.bitok.online/badge.svg)](https://slack.bitok.online/)
-[![Gitter](https://badges.gitter.im/bitokproject/bitok.svg)](https://gitter.im/bitokproject/bitok?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=body_badge) [![Build Status](https://travis-ci.org/bitokproject/bitok.svg?branch=master)](https://travis-ci.org/bitokproject/bitok) [![Code Climate](https://codeclimate.com/github/bitokproject/bitok/badges/gpa.svg)](https://codeclimate.com/github/bitokproject/bitok) [![Test Coverage](https://codeclimate.com/github/bitokproject/bitok/badges/coverage.svg)](https://codeclimate.com/github/bitokproject/bitok/coverage) 
 
 Introduction
 ===========================
