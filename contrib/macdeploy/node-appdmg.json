@@ -1,0 +1,12 @@
+//npm install -g appdmg
+//appdmg node-appdmg.json BitOKwallet.dmg
+//Mount .dmg and copy /Volumes/BitOKwallet/.DS_Store to ./DS_Store
+{
+  "title": "BitOKwallet",
+  "icon": "../../src/qt/res/icons/bitok.icns",
+  "background": "background.png",
+  "contents": [
+    { "x": 370, "y": 156, "type": "link", "path": "/Applications" },
+    { "x": 128, "y": 156, "type": "file", "path": "../../BitOKwallet.app" }
+  ]
+}
