@@ -29,10 +29,10 @@ int64_t CChainParams::GetProofOfWorkReward(int nHeight, int64_t nFees) const
         nSubsidy = 0;
     else
     if (nHeight <= nLastFairLaunchBlock)
-        nSubsidy = 18000000 * COIN;
+        nSubsidy = 18000000 * COIN; // Developers safe target
     else
     if (nHeight <= nLastPOWBlock)
-        nSubsidy = (NetworkID() == CChainParams::TESTNET ? 10000 : 400) * COIN;
+        nSubsidy = (NetworkID() == CChainParams::TESTNET ? 10000 : 500) * COIN; // Count for Mature coins
 
     if (fDebug && GetBoolArg("-printcreation"))
         LogPrintf("GetProofOfWorkReward() : create=%s nSubsidy=%d\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
@@ -110,7 +110,7 @@ static void convertSeeds(std::vector<CAddress> &vSeedsOut, const unsigned int *d
 class CBaseChainParams : public CChainParams {
 public:
     CBaseChainParams() {
-        const char* pszTimestamp = "08 Feb 2017 bitok BTK";
+        const char* pszTimestamp = "9 april 2017 bitok BTK";
         CTransaction txNew;
         txNew.nTime = GENESIS_BLOCK_TIME;
         txNew.vin.resize(1);
@@ -153,26 +153,26 @@ public:
 
         vAlertPubKey = ParseHex("031b5def92b2d59943e57aaa8b1adbb110ff215fc4ebdc6fb5c9a797e2b1dea527");
 
-        nDefaultPort = 11222;
-        nRPCPort = 11333;
+        nDefaultPort = 11112;
+        nRPCPort = 11110;
         nBIP44ID = 0x80000023;
 
-        nLastPOWBlock = 500;
+        nLastPOWBlock = 1000;
         nLastFairLaunchBlock = 400;
 
-        nFirstPosv2Block = 500;
-        nFirstPosv3Block = 550;
+        nFirstPosv2Block = 600;
+        nFirstPosv3Block = 700;
 
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20); // "standard" scrypt target limit for proof of work, results with 0,000244140625 proof-of-work difficulty
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 48);
 
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce   = 454762;
+        genesis.nNonce   = 43248;
         hashGenesisBlock = genesis.GetHash();
 
-        assert(hashGenesisBlock == uint256("0x00000881a38499ee725131ba5c96fb278e23f5691c5de3ae7eb1544b1b2e8e93"));
-        assert(genesis.hashMerkleRoot == uint256("0x38138e3e6509a9508ae16616a8d485028e79eadeab96abfab501cb8a7cd0340a"));
+        assert(hashGenesisBlock == uint256("0x00000ddbab1ff8d4eee43cda484e36b1b218e0d5d046eb51fc7c23f3413ca392"));
+        assert(genesis.hashMerkleRoot == uint256("0xa43cf6ae6ff1409c7ef6e7102f2fdfa679a4fd150e5bf788e3a31b3fabd20bc4"));
 
 
 
@@ -215,24 +215,25 @@ public:
 
         vAlertPubKey = ParseHex("0373d8dce43eb98374bcfff2352cd559e6774fd6a87eef73b2fbdb39b2b0bc0082");
 
-        nDefaultPort = 51997;
-        nRPCPort = 51996;
+        nDefaultPort = 21997;
+        nRPCPort = 21996;
         nBIP44ID = 0x80000001;
 
         nLastPOWBlock = 110;
         nLastFairLaunchBlock = 10;
 
-        nFirstPosv2Block = 110;
-        nFirstPosv3Block = 500;
+        nFirstPosv2Block = 550;
+        nFirstPosv3Block = 600;
 
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 16);
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 16);
 
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 49343;
+        genesis.nNonce = 111415;
        hashGenesisBlock = genesis.GetHash();
- assert(hashGenesisBlock == uint256("0x0000a9b45e27b967f1573beda8062737f5fa7405307574770fb31434acf976a0"));
+
+	 assert(hashGenesisBlock == uint256("0x00007124f2da96edcaf180cc73550fde52075477dce0feb7d86bdccffb93b3fd"));
 
         base58Prefixes[PUBKEY_ADDRESS]      = list_of(127).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[SCRIPT_ADDRESS]      = list_of(196).convert_to_container<std::vector<unsigned char> >();
@@ -272,10 +273,11 @@ public:
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
         genesis.nTime = 1411111111;
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 0;
+        genesis.nNonce = 2;
         hashGenesisBlock = genesis.GetHash();
+
         nDefaultPort = 14444;
-        assert(hashGenesisBlock == uint256("0x4ddea7562a5539e0dae664ed1bd30ec4a4bf501fd922492644a0df6f5d62c78b"));
+        assert(hashGenesisBlock == uint256("0x7d27210b79da14b0bb1eba7c5535209198b0cf0836cae96c3d122c1649c9fa7c"));
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
     }
