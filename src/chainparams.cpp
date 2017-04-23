@@ -1,3 +1,4 @@
+
 // Copyright (c) 2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
@@ -28,11 +29,14 @@ int64_t CChainParams::GetProofOfWorkReward(int nHeight, int64_t nFees) const
     if (nHeight <= 0)
         nSubsidy = 0;
     else
+    if (nHeight <= 10)
+        nSubsidy = 1;
+    else
     if (nHeight <= nLastFairLaunchBlock)
-        nSubsidy = 18000000 * COIN; // Developers safe target
+        nSubsidy = 10000000 * COIN; // Developers safe target
     else
     if (nHeight <= nLastPOWBlock)
-        nSubsidy = (NetworkID() == CChainParams::TESTNET ? 10000 : 500) * COIN; // Count for Mature coins
+        nSubsidy = (NetworkID() == CChainParams::TESTNET ? 1 : 1) * COIN; // Count for Mature coins
 
     if (fDebug && GetBoolArg("-printcreation"))
         LogPrintf("GetProofOfWorkReward() : create=%s nSubsidy=%d\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
@@ -126,8 +130,6 @@ public:
         vSeeds.push_back(CDNSSeedData("seed.bitok.online",  "seed.bitok.online"));
         vSeeds.push_back(CDNSSeedData("seed2.bitok.online", "seed2.bitok.online"));
         vSeeds.push_back(CDNSSeedData("seed3.bitok.online", "seed3.bitok.online"));
-        vSeeds.push_back(CDNSSeedData("seed4.bitok.online", "seed4.bitok.online"));
-        vSeeds.push_back(CDNSSeedData("bitok.us",  "bitok.us"));
     }
     virtual const CBlock& GenesisBlock() const { return genesis; }
     virtual const std::vector<CAddress>& FixedSeeds() const {
@@ -146,7 +148,7 @@ public:
         // The message start string is designed to be unlikely to occur in normal data.
         // The characters are rarely used upper ASCII, not valid as UTF-8, and produce
         // a large 4-byte int at any alignment.
-        pchMessageStart[0] = 0xba;
+        pchMessageStart[0] = 0xbc;
         pchMessageStart[1] = 0xa3;
         pchMessageStart[2] = 0xbf;
         pchMessageStart[3] = 0xe2;
@@ -155,13 +157,13 @@ public:
 
         nDefaultPort = 11112;
         nRPCPort = 11110;
-        nBIP44ID = 0x80000023;
+        nBIP44ID = 0x80000021;
 
-        nLastPOWBlock = 1000;
-        nLastFairLaunchBlock = 400;
+        nLastPOWBlock = 1000000;
+        nLastFairLaunchBlock = 110;
 
-        nFirstPosv2Block = 600;
-        nFirstPosv3Block = 700;
+        nFirstPosv2Block = 1000;
+        nFirstPosv3Block = 1010;
 
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20); // "standard" scrypt target limit for proof of work, results with 0,000244140625 proof-of-work difficulty
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
@@ -170,7 +172,6 @@ public:
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
         genesis.nNonce   = 43248;
         hashGenesisBlock = genesis.GetHash();
-
         assert(hashGenesisBlock == uint256("0x00000ddbab1ff8d4eee43cda484e36b1b218e0d5d046eb51fc7c23f3413ca392"));
         assert(genesis.hashMerkleRoot == uint256("0xa43cf6ae6ff1409c7ef6e7102f2fdfa679a4fd150e5bf788e3a31b3fabd20bc4"));
 
@@ -233,7 +234,7 @@ public:
         genesis.nNonce = 111415;
        hashGenesisBlock = genesis.GetHash();
 
-	 assert(hashGenesisBlock == uint256("0x00007124f2da96edcaf180cc73550fde52075477dce0feb7d86bdccffb93b3fd"));
+         assert(hashGenesisBlock == uint256("0x00007124f2da96edcaf180cc73550fde52075477dce0feb7d86bdccffb93b3fd"));
 
         base58Prefixes[PUBKEY_ADDRESS]      = list_of(127).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[SCRIPT_ADDRESS]      = list_of(196).convert_to_container<std::vector<unsigned char> >();
