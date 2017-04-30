@@ -24,18 +24,11 @@ int64_t CChainParams::GetProofOfWorkReward(int nHeight, int64_t nFees) const
 
     // miner's coin base reward
     int64_t nSubsidy = 0;
+    if(nHeight == 1)
+                nSubsidy = (NetworkID() == CChainParams::TESTNET ? 100000 : 2000000000) * COIN;  // 2 Bil on MainNet
 
-    if (nHeight <= 0)
+    else if(nHeight <= nLastPOWBlock)
         nSubsidy = 0;
-    else
-    if (nHeight <= 10)
-        nSubsidy = 1;
-    else
-    if (nHeight <= nLastFairLaunchBlock)
-        nSubsidy = 10000000 * COIN; // Developers safe target
-    else
-    if (nHeight <= nLastPOWBlock)
-        nSubsidy = (NetworkID() == CChainParams::TESTNET ? 1 : 1) * COIN; // Count for Mature coins
 
     if (fDebug && GetBoolArg("-printcreation"))
         LogPrintf("GetProofOfWorkReward() : create=%s nSubsidy=%d\n", FormatMoney(nSubsidy).c_str(), nSubsidy);
@@ -113,7 +106,7 @@ static void convertSeeds(std::vector<CAddress> &vSeedsOut, const unsigned int *d
 class CBaseChainParams : public CChainParams {
 public:
     CBaseChainParams() {
-        const char* pszTimestamp = "9 april 2017 bitok BTK";
+         const char* pszTimestamp = "30 april 2017 bitok BTK";
         CTransaction txNew;
         txNew.nTime = GENESIS_BLOCK_TIME;
         txNew.vin.resize(1);
@@ -149,30 +142,28 @@ public:
         // a large 4-byte int at any alignment.
         pchMessageStart[0] = 0xbc;
         pchMessageStart[1] = 0xa3;
-        pchMessageStart[2] = 0xbf;
-        pchMessageStart[3] = 0xe2;
-
+        pchMessageStart[2] = 0xfb;
+  	pchMessageStart[3] = 0x5c;
         vAlertPubKey = ParseHex("031b5def92b2d59943e57aaa8b1adbb110ff215fc4ebdc6fb5c9a797e2b1dea527");
 
-        nDefaultPort = 11112;
-        nRPCPort = 11110;
-        nBIP44ID = 0x80000021;
+        nDefaultPort = 11122;
+        nRPCPort = 11100;
+        nBIP44ID = 0x80000023;
 
-        nLastPOWBlock = 1000000;
-        nLastFairLaunchBlock = 110;
-
-        nFirstPosv2Block = 1000;
-        nFirstPosv3Block = 1010;
+        nLastPOWBlock = 20000;
+        nFirstPosv2Block = 20001;
+        nFirstPosv3Block = 20010;
 
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 20); // "standard" scrypt target limit for proof of work, results with 0,000244140625 proof-of-work difficulty
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 48);
 
         genesis.nBits    = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce   = 43248;
+        genesis.nNonce   = 979270;
         hashGenesisBlock = genesis.GetHash();
-        assert(hashGenesisBlock == uint256("0x00000ddbab1ff8d4eee43cda484e36b1b218e0d5d046eb51fc7c23f3413ca392"));
-        assert(genesis.hashMerkleRoot == uint256("0xa43cf6ae6ff1409c7ef6e7102f2fdfa679a4fd150e5bf788e3a31b3fabd20bc4"));
+  
+        assert(hashGenesisBlock == uint256("0x00000a8f7dc0e4df283e6192ceeec9dc5d10f8dc73f1a97c4a1618b4b0fa31d0"));
+        assert(genesis.hashMerkleRoot == uint256("0xa136ae6a54129c35a8dec34dec8ce9de4a61c63c3c1f543abef64b6a840a4dfc"));
 
 
 
@@ -220,20 +211,18 @@ public:
         nBIP44ID = 0x80000001;
 
         nLastPOWBlock = 110;
-        nLastFairLaunchBlock = 10;
 
-        nFirstPosv2Block = 550;
-        nFirstPosv3Block = 600;
+        nFirstPosv2Block = 1550;
+        nFirstPosv3Block = 1600;
 
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 16);
         bnProofOfStakeLimit = CBigNum(~uint256(0) >> 20);
         bnProofOfStakeLimitV2 = CBigNum(~uint256(0) >> 16);
 
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 111415;
+        genesis.nNonce = 75710;
        hashGenesisBlock = genesis.GetHash();
-
-         assert(hashGenesisBlock == uint256("0x00007124f2da96edcaf180cc73550fde52075477dce0feb7d86bdccffb93b3fd"));
+         assert(hashGenesisBlock == uint256("0x0000df5f98453dbb5161d724fd4eb8a00b54d4a0e6ecad965abf0b2818ba8032"));
 
         base58Prefixes[PUBKEY_ADDRESS]      = list_of(127).convert_to_container<std::vector<unsigned char> >();
         base58Prefixes[SCRIPT_ADDRESS]      = list_of(196).convert_to_container<std::vector<unsigned char> >();
@@ -273,11 +262,10 @@ public:
         bnProofOfWorkLimit = CBigNum(~uint256(0) >> 1);
         genesis.nTime = 1411111111;
         genesis.nBits  = bnProofOfWorkLimit.GetCompact();
-        genesis.nNonce = 2;
+        genesis.nNonce = 0;
         hashGenesisBlock = genesis.GetHash();
-
         nDefaultPort = 14444;
-        assert(hashGenesisBlock == uint256("0x7d27210b79da14b0bb1eba7c5535209198b0cf0836cae96c3d122c1649c9fa7c"));
+        assert(hashGenesisBlock == uint256("0x02ad78eb3aa358c466198794a75990dfef6e85c2e66256b3880da69d1958e79f"));
 
         vSeeds.clear();  // Regtest mode doesn't have any DNS seeds.
     }

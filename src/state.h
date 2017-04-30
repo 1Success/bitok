@@ -35,7 +35,7 @@ enum eBlockFlags
 
 
 /*  nServices flags
-    top 32 bits of CNode::nServices are used to mark services required 
+    top 32 bits of CNode::nServices are used to mark services required
 */
 
 enum
@@ -47,7 +47,7 @@ enum
     SMSG_RELAY   = (1 << 4),
 };
 
-const int64_t GENESIS_BLOCK_TIME = 1491701392;
+const int64_t GENESIS_BLOCK_TIME = 1493519175;
 
 static const int64_t COIN = 100000000;
 static const int64_t CENT = 1000000;
