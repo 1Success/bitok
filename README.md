@@ -1,4 +1,6 @@
 -![BitokOnline Logo](https://raw.githubusercontent.com/bitokcoin/bitok/master/src/qt/res/images/splash.png)
+
+
 Introduction
 ===========================
 
